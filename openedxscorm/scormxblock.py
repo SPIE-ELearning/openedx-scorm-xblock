@@ -319,6 +319,7 @@ class ScormXBlock(XBlock, CompletableXBlockMixin):
                 "navigation_menu_width": self.navigation_menu_width,
                 "enable_navigation_menu": self.enable_navigation_menu,
                 "enable_fullscreen_button": self.enable_fullscreen_button,
+                "popup_on_launch": self.popup_on_launch,
             },
         )
         return Response(body=rendered)

@@ -42,18 +42,23 @@
                     width: 70%;
                     height: 700px;
                 }
+                .navigation-disabled {
+                    width: 100%;
+                }
             }
         </style>
     </head>
     <body>
         <div class="scorm-xblock">
-            <div class="navigational-panel" style="width: {% if scorm_xblock.navigation_menu_width %}{{scorm_xblock.navigation_menu_width}}px{% else %}30%{% endif %};">
+            {% if enable_navigation_menu and popup_on_launch %}
+            <div class="navigational-panel" style="width: {% if navigation_menu_width %}{{navigation_menu_width}}px{% else %}30%{% endif %};">
                 <h4>Table of contents</h4>
                 <ul>
                     {{navigation_menu|safe }}
                 </ul>
             </div>
-        <iframe class="scorm-embedded" src="{{ index_page_url }}" width="{{ width }}" height="{{ height }}"></iframe>
+            {% endif %}
+        <iframe class="scorm-embedded {% if not enable_navigation_menu %}navigation-disabled{% endif %}" src="{{ index_page_url }}" width="{{ width }}" height="{{ height }}"></iframe>
         <script>
             window.resizeTo({{ width }} + 20, {{ height }} + 20);
             window.onload = function () {
