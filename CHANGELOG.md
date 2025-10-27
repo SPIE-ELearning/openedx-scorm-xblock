@@ -16,6 +16,20 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-19.0.3'></a>
+## v19.0.3 (2025-10-27)
+
+- [Bugfix] Set completion_status to completed when lesson_status is passed to ensure course completion status in SCORM 1.2. (by @so-jd)
+
+- [Bugfix] Don't show navigation menu and change scorm content width from 70% to 100% when navigation menu is disabled in new pop-up window. (by @Faraz32123)
+
+<a id='changelog-19.0.2'></a>
+## v19.0.2 (2025-03-11)
+
+- [Bugfix] Make scorm panel and navigation menu cover the entire height of the display in fullscreen. (by @Danyal-Faheem)
+
+- [Improvement] Provide an option to use the default storage backend url to access scorm assets directly from storage. (by @Danyal-Faheem)
+
 <a id='changelog-18.0.2'></a>
 ## v18.0.2 (2024-07-01)
 
