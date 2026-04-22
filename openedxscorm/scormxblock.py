@@ -231,7 +231,13 @@ class ScormXBlock(XBlock, CompletableXBlockMixin):
         Response object containing the content of the requested file with the appropriate content type.
         """
         file_name = os.path.basename(suffix)
-        file_path = self.find_file_path(file_name)        
+
+        # first try to find the file by its intact path
+        file_path = self.get_file_with_path(suffix)
+        if(file_path is None):
+            # then try to find just by name
+            file_path = self.find_file_path(file_name)
+            logger.info("asset proxy used fallback to locate " + suffix)
         file_type, _ = mimetypes.guess_type(file_name)
         with self.storage.open(file_path) as response:
             file_content = response.read()
@@ -745,6 +751,26 @@ class ScormXBlock(XBlock, CompletableXBlockMixin):
         if path is None:
             raise ScormError(f"Invalid package: could not find '{filename}' file")
         return path
+
+    def get_file_with_path(self, filepath):
+        """
+        Checks if the file with the given path exists. Returns the path of the file, None if not found.
+        """
+        path = self.get_file_with_path_under(filepath, self.extract_folder_path) or self.get_file_with_path_under(filepath, self.extract_folder_base_path)
+        if path is None:
+            return None
+        return path
+
+    def get_file_with_path_under(self, filepath, root):
+        """
+        Checks if the file with the given file with path exists under the given root. Returns the path of the file, None if not found.
+        """
+        combined_path = os.path.join(root, filepath)
+
+        if self.storage.exists(combined_path): 
+            return combined_path
+        else:
+            return None
 
     def get_file_path(self, filename, root):
         """
